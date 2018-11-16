@@ -15,27 +15,28 @@ void Board::play() {
         print();
         input = players[currentPlayer].getInput(this);
         if (input == "QUIT") {
+            cout << players[currentPlayer].getColor() << ": " << input << endl;
             printWinningStatement(getOtherPlayer());
             return;
         }
         if (input == "PASS") {
             if (passFlag){
-                printWinningStatement(blackDiscCount > whiteDiscCount ? BLACK : WHITE);
+                printWinningStatement(blackDiscCount > whiteDiscCount ? Rules::BLACK : Rules::WHITE);
                 return;
             }
             passFlag = true;
         } else {
-            putDisc(input[0]-'A', input[1]-'1');
+            putDisc(input[1]-'1', input[0]-'A');
         }
         currentPlayer = getOtherPlayer();
     }
-    printWinningStatement(blackDiscCount > whiteDiscCount ? BLACK : WHITE);
+    printWinningStatement(blackDiscCount > whiteDiscCount ? Rules::BLACK : Rules::WHITE);
 }
 
 void Board::print() {
     for (int i=0; i<Sizes::BOARD_SIZE; i++){
         for (int j=0; j<Sizes::BOARD_SIZE; j++){
-            cout << players[currentPlayer].getColor() << ' ';
+            cout << (board[i][j] == Rules::EMPTY ? "O" : board[i][j] == Rules::BLACK ? "B" : "W") << (j == Sizes::BOARD_SIZE-1 ? "" : " ");
         }
         cout << endl;
     }
@@ -44,41 +45,41 @@ void Board::print() {
 Board::Board() {
     for (int i=0; i<Sizes::BOARD_SIZE; i++){
         for (int j=0; j<Sizes::BOARD_SIZE; j++){
-            board[i][j] = EMPTY;
+            board[i][j] = Rules::EMPTY;
         }
     }
     Rules::initBoard(this);
-    currentPlayer = BLACK;
-    players[BLACK].setColor('B');
-    players[WHITE].setColor('W');
+    currentPlayer = Rules::BLACK;
+    players[Rules::BLACK].setColor('B');
+    players[Rules::WHITE].setColor('W');
     blackDiscCount = 0;
     whiteDiscCount = 0;
 }
 
-boardPieces Board::getOtherPlayer() {
-    return currentPlayer == BLACK ? WHITE : BLACK;
+Rules::boardPieces Board::getOtherPlayer() {
+    return currentPlayer == Rules::BLACK ? Rules::WHITE : Rules::BLACK;
 }
 
-inline void Board::printWinningStatement(boardPieces player) {
-    cout << (player == BLACK ? "B" : "W") <<"wins the game" << endl;
+inline void Board::printWinningStatement(Rules::boardPieces player) {
+    cout << (player == Rules::BLACK ? "B" : "W") <<" wins the game." << endl;
 
 }
 
-boardPieces Board::getPlayerAt(int x, int y) {
+Rules::boardPieces Board::getPlayerAt(int x, int y) {
     return board[x][y];
 }
 
-void Board::setPlayerAt(boardPieces piece, int x, int y) {
+void Board::setPlayerAt(Rules::boardPieces piece, int x, int y) {
     board[x][y] = piece;
 }
 
-boardPieces Board::getCurrentPlayer() {
+Rules::boardPieces Board::getCurrentPlayer() {
     return currentPlayer;
 }
 
 void Board::putDisc(int x, int y) {
     setPlayerAt(getCurrentPlayer(), x, y);
-    if (getCurrentPlayer() == BLACK) {
+    if (getCurrentPlayer() == Rules::BLACK) {
         blackDiscCount++;
     } else {
         whiteDiscCount++;

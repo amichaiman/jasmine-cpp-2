@@ -4,14 +4,15 @@
 
 #ifndef YASMIN_CPP_2_RULES_H
 #define YASMIN_CPP_2_RULES_H
-#include "Board.h"
 #include <string>
+
+class Board;
 using namespace std;
 
-typedef enum{BLACK, WHITE, EMPTY} boardPieces;
 
 class Rules {
 public:
+    typedef enum {BLACK, WHITE, EMPTY} boardPieces;
     static void initBoard(Board *board);
     static bool isValidInput(string input, Board *board);
     static void updateBoard(Board *board, int x, int y);

@@ -13,21 +13,21 @@ public:
     Board();
     void play();
     void print();
-    boardPieces getOtherPlayer();
-    boardPieces getPlayerAt(int x, int y);
-    void setPlayerAt(boardPieces piece, int x, int y);
-    boardPieces getCurrentPlayer();
+    Rules::boardPieces getOtherPlayer();
+    Rules::boardPieces getPlayerAt(int x, int y);
+    void setPlayerAt(Rules::boardPieces piece, int x, int y);
+    Rules::boardPieces getCurrentPlayer();
     int getBlackDiscCount() const;
     void setBlackDiscCount(int blackDiscCount);
     int getWhiteDiscCount() const;
     void setWhiteDiscCount(int whiteDiscCount);
 private:
-    boardPieces board[Sizes::BOARD_SIZE][Sizes::BOARD_SIZE];
+    Rules::boardPieces board[Sizes::BOARD_SIZE][Sizes::BOARD_SIZE];
     Player players[Sizes::NUMBER_OF_PLAYERS];
-    boardPieces currentPlayer;
+    Rules::boardPieces currentPlayer;
     int blackDiscCount;
     int whiteDiscCount;
-    inline void printWinningStatement(boardPieces player);
+    inline void printWinningStatement(Rules::boardPieces player);
     void putDisc(int x, int y);
 };
 

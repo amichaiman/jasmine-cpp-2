@@ -11,10 +11,11 @@
 
 string Player::getInput(Board *board) {
     string input;
+    cout << getColor() << ":" << endl;
     cin >> input;
 
     while (!cinGoodStatus() || !Rules::isValidInput(input, board)){
-        cerr << "Invalid move; the game awaits a valid move\n.";
+        cerr << "Invalid move; the game awaits a valid move.\n";
         cin >> input;
     }
 
